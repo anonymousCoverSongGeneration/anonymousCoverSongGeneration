@@ -1,0 +1,25 @@
+# --- Internal dev artifacts (contain internal mount paths / usernames) ---
+SAMPLES.md
+select_samples.py
+run_select.sh
+selection.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# --- Editor / OS ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# --- Node (if ever added) ---
+node_modules/
+
+# --- Local git auth (never commit) ---
+.git-credentials*
