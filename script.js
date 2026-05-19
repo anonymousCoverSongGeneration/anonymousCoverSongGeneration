@@ -35,7 +35,6 @@
   function makeFullCase(idx, group) {
     // §2.1 (original-lyrics): idx 1..4 in DATA.fullOriginal, use entry.lyrics.
     // §2.2 (new-lyrics):     idx 5..8 in DATA.fullNew,      use entry.lyrics_new.
-    //                        Suno is intentionally absent for §2.2.
     let entry, lyricsText;
     if (group === "original") {
       entry = (DATA.fullOriginal || [])[idx - 1];
@@ -48,7 +47,6 @@
       idx, group,
       pending: !entry,
       lang:    entry ? entry.lang : null,
-      sunoPending: group === "new",                     // Suno not generated for new lyrics
       title: group === "original" ? "Original lyrics + new style"
                                   : "New lyrics + new style",
       reference: `assets/audio/full/${group}/case${idx}/reference.mp3`,
@@ -213,18 +211,7 @@
     row.appendChild(styleCell);
 
     for (const s of FULL_SYSTEMS) {
-      if (s.key === "suno" && c.sunoPending) {
-        // §2.2: Suno not generated for new lyrics; show pending placeholder.
-        const cell = el("div", { cls: "cell" });
-        cell.appendChild(el("div", { cls: "cell-label", text: s.name }));
-        const pend = el("div", { cls: "cell-pending" });
-        pend.appendChild(el("div", { cls: "cell-pending-label", text: "Samples pending" }));
-        pend.appendChild(el("div", { cls: "cell-pending-note", text: "Suno output not yet generated." }));
-        cell.appendChild(pend);
-        row.appendChild(cell);
-      } else {
-        row.appendChild(audioCell(s.name, c.outputs[s.key], s.ours));
-      }
+      row.appendChild(audioCell(s.name, c.outputs[s.key], s.ours));
     }
 
     body.appendChild(row);

@@ -691,7 +691,6 @@ strong {
    "Samples pending" placeholders — shown for §2.2 cases that don't
    have samples yet, plus the intro's new-lyrics column.
    ============================================================ */
-.cell-pending,
 .case-pending {
   font-family: var(--sans);
   background: var(--bg);
@@ -706,7 +705,6 @@ strong {
   padding: 28px 14px;
   margin: 0 12px 12px;
 }
-.cell-pending-label,
 .case-pending-label {
   font-size: 12px;
   font-weight: 600;
@@ -715,7 +713,6 @@ strong {
   color: var(--ink-soft);
   margin-bottom: 4px;
 }
-.cell-pending-note,
 .case-pending-note {
   font-size: 12px;
   font-style: italic;
