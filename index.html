@@ -1,225 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FlexCover: Flexible Cover Song Generation via Symbolic Lead Sheet Control &mdash; Demo Page</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlexCover: Flexible Cover Song Generation via Symbolic Lead Sheet Control &mdash; Demo Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<!-- ============================================================ -->
-<!-- HEADER (NeurIPS-style title block, anonymous)                 -->
-<!-- ============================================================ -->
-<header class="paper-header">
-  <h1 class="paper-title">FlexCover: Flexible Cover Song Generation<br />via Symbolic Lead Sheet Control</h1>
-  <div class="paper-authors">
-    <p class="anon-line">Anonymous Authors</p>
-    <p class="anon-line">Submission&nbsp;#1346 &middot; Paper under double-blind review</p>
-  </div>
-  <p class="paper-abstract">
-    <strong>Demo page.</strong>
-    FlexCover conditions a pretrained text-to-song foundation model on a <em>symbolic lead sheet</em>,
-    enabling alignment-free control over tonal content while leaving timing, structure, and
-    partial-segment generation flexible. We compare FlexCover with three baselines &mdash;
-    <em>Suno&nbsp;v5.5</em>, <em>ACE-Step&nbsp;1.5</em>, and <em>SongEcho</em> &mdash; on full-song and
-    partial-reference cover generation. Samples produced by our system are
-    <span class="ours-inline">highlighted</span> throughout&nbsp;Sections&nbsp;2&nbsp;and&nbsp;3.
-  </p>
-</header>
-
-<!-- ============================================================ -->
-<!-- TABLE OF CONTENTS (sticky horizontal bar, items right-aligned)-->
-<!-- ============================================================ -->
-<nav id="toc" class="toc" aria-label="Table of contents">
-  <div class="toc-inner">
-    <span class="toc-label">Table of Contents</span>
-    <div class="toc-items">
-      <a href="#intro" class="toc-top">1. Introduction</a>
-      <a href="#intro-full" class="toc-sub">1.1 Full</a>
-      <a href="#intro-partial" class="toc-sub">1.2 Partial</a>
-      <span class="toc-sep" aria-hidden="true">|</span>
-      <a href="#full-cover" class="toc-top">2. Full-Song Cover</a>
-      <a href="#full-original" class="toc-sub">2.1 Original lyrics</a>
-      <a href="#full-new" class="toc-sub">2.2 New lyrics</a>
-      <span class="toc-sep" aria-hidden="true">|</span>
-      <a href="#partial-cover" class="toc-top">3. Partial-Reference</a>
-      <a href="#partial-continuation" class="toc-sub">3.1 Continuation</a>
-      <a href="#partial-outpainting" class="toc-sub">3.2 Outpainting</a>
-      <a href="#partial-inpainting" class="toc-sub">3.3 Inpainting</a>
+  <!-- ============================================================ -->
+  <!-- HEADER (NeurIPS-style title block, anonymous)                 -->
+  <!-- ============================================================ -->
+  <header class="paper-header">
+    <h1 class="paper-title">FlexCover: Flexible Cover Song Generation<br />via Symbolic Lead Sheet Control</h1>
+    <div class="paper-authors">
+      <p class="anon-line">Anonymous Authors</p>
+      <p class="anon-line">Submission&nbsp;#1346 &middot; Paper under double-blind review</p>
     </div>
-  </div>
-</nav>
-
-<main class="paper-body">
+    <p class="paper-abstract">
+      <strong>Demo page.</strong>
+      FlexCover conditions a pretrained text-to-song foundation model on a <em>symbolic lead sheet</em>,
+      enabling alignment-free control over tonal content while leaving timing, structure, and
+      partial-segment generation flexible. We compare FlexCover with three baselines &mdash;
+      <em>Suno&nbsp;v5.5</em>, <em>ACE-Step&nbsp;1.5</em>, and <em>SongEcho</em> &mdash; on full-song and
+      partial-reference cover generation. Samples produced by our system are
+      <span class="ours-inline">highlighted</span> throughout&nbsp;Sections&nbsp;2&nbsp;and&nbsp;3.
+    </p>
+  </header>
 
   <!-- ============================================================ -->
-  <!-- 1. INTRODUCTION                                               -->
+  <!-- TABLE OF CONTENTS (sticky horizontal bar, items right-aligned)-->
   <!-- ============================================================ -->
-  <section id="intro" class="section">
-    <h2 class="section-title">1. Introduction</h2>
-    <div class="prose">
-      <p class="section-intro">
-        FlexCover is a cover-song generation model that conditions a pretrained text-to-song foundation
-        model on a symbolic lead sheet. The user can freely combine reference music, lyrics, and style
-        to produce a new cover. We support two task families:
-      </p>
-      <ul class="feature-list">
-        <li>
-          <strong>Full-Song Cover.</strong>
-          Re-render an entire song under a new style. The reference can be combined with either the
-          <em>original</em> lyrics or with <em>new</em> lyrics provided by the user.
-        </li>
-        <li>
-          <strong>Partial-Reference Song Cover.</strong>
-          Only a portion of the reference is observed; the rest is freely generated. Three configurations:
-          <em>continuation</em> (only the song's beginning, up to the first chorus, is visible),
-          <em>outpainting</em> (only the first chorus is visible),
-          <em>inpainting</em> (everything except the first chorus is visible).
-        </li>
-      </ul>
-      <p class="section-intro">
-        Below we showcase FlexCover under each configuration on a single demonstration song. Baselines
-        are excluded here; quantitative comparisons appear in Sections&nbsp;2 and&nbsp;3.
-      </p>
-    </div>
-
-    <!-- ----- 1.1 Full-Song Cover demo ----- -->
-    <h3 id="intro-full" class="subsection-title">1.1 Full-Song Cover Demo</h3>
-    <div class="demo-card">
-      <div class="case-row case-row-intro-full">
-        <div class="cell">
-          <div class="cell-label">Reference Music</div>
-          <audio controls preload="none" src="assets/audio/intro/reference.mp3"></audio>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Original Lyrics</div>
-          <div class="lyrics-box collapsible" data-intro-lyrics>
-            <pre class="lyrics-text">[Loading...]</pre>
-            <button class="lyrics-toggle" type="button">Expand</button>
-          </div>
-        </div>
-        <div class="cell">
-          <div class="cell-label">New Lyrics</div>
-          <div class="lyrics-box collapsible" data-intro-new-lyrics>
-            <pre class="lyrics-text">[Loading...]</pre>
-            <button class="lyrics-toggle" type="button">Expand</button>
-          </div>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Style Prompt</div>
-          <div class="style-box" data-intro-style>[Loading...]</div>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Cover &middot; Original Lyrics + New Style</div>
-          <audio controls preload="none" src="assets/audio/intro/full_original.mp3"></audio>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Cover &middot; New Lyrics + New Style</div>
-          <audio controls preload="none" src="assets/audio/intro/full_new.mp3"></audio>
-        </div>
+  <nav id="toc" class="toc" aria-label="Table of contents">
+    <div class="toc-inner">
+      <span class="toc-label">Table of Contents</span>
+      <div class="toc-items">
+        <a href="#intro" class="toc-top">1. Introduction</a>
+        <a href="#intro-full" class="toc-sub">1.1 Full</a>
+        <a href="#intro-partial" class="toc-sub">1.2 Partial</a>
+        <span class="toc-sep" aria-hidden="true">|</span>
+        <a href="#full-cover" class="toc-top">2. Full-Song Cover</a>
+        <a href="#full-original" class="toc-sub">2.1 Original lyrics</a>
+        <a href="#full-new" class="toc-sub">2.2 New lyrics</a>
+        <span class="toc-sep" aria-hidden="true">|</span>
+        <a href="#partial-cover" class="toc-top">3. Partial-Reference</a>
+        <a href="#partial-continuation" class="toc-sub">3.1 Continuation</a>
+        <a href="#partial-outpainting" class="toc-sub">3.2 Outpainting</a>
+        <a href="#partial-inpainting" class="toc-sub">3.3 Inpainting</a>
       </div>
     </div>
+  </nav>
 
-    <!-- ----- 1.2 Partial-Reference Cover demo ----- -->
-    <h3 id="intro-partial" class="subsection-title">1.2 Partial-Reference Cover Demo</h3>
-    <div class="demo-card">
-      <div class="case-row case-row-intro-partial">
-        <div class="cell">
-          <div class="cell-label">Full Reference Music</div>
-          <audio controls preload="none" src="assets/audio/intro/reference.mp3"></audio>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Full Lyrics</div>
-          <div class="lyrics-box collapsible" data-intro-lyrics>
-            <pre class="lyrics-text">[Loading...]</pre>
-            <button class="lyrics-toggle" type="button">Expand</button>
+  <main class="paper-body">
+
+    <!-- ============================================================ -->
+    <!-- 1. INTRODUCTION                                               -->
+    <!-- ============================================================ -->
+    <section id="intro" class="section">
+      <h2 class="section-title">1. Introduction</h2>
+      <div class="prose">
+        <p class="section-intro">
+          FlexCover is a cover-song generation model that conditions a pretrained text-to-song foundation
+          model on a symbolic lead sheet. The user can freely combine reference music, lyrics, and style
+          to produce a new cover. We support two task families:
+        </p>
+        <ul class="feature-list">
+          <li>
+            <strong>Full-Song Cover.</strong>
+            Re-render an entire song under a new style. The reference can be combined with either the
+            <em>original</em> lyrics or with <em>new</em> lyrics provided by the user.
+          </li>
+          <li>
+            <strong>Partial-Reference Song Cover.</strong>
+            Only a portion of the reference is observed; the rest is freely generated. Three configurations:
+            <em>continuation</em> (only the song's beginning, up to the first chorus, is visible),
+            <em>outpainting</em> (only the first chorus is visible),
+            <em>inpainting</em> (everything except the first chorus is visible).
+          </li>
+        </ul>
+        <p class="section-intro">
+          Below we showcase FlexCover under each configuration on a single demonstration song. Baselines
+          are excluded here; quantitative comparisons appear in Sections&nbsp;2 and&nbsp;3.
+        </p>
+      </div>
+
+      <!-- ----- 1.1 Full-Song Cover demo ----- -->
+      <h3 id="intro-full" class="subsection-title">1.1 Full-Song Cover Demo</h3>
+      <div class="demo-card">
+        <div class="case-row case-row-intro-full">
+          <div class="cell">
+            <div class="cell-label">Reference Music</div>
+            <audio controls preload="none" src="assets/audio/intro/reference.mp3"></audio>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Original Lyrics</div>
+            <div class="lyrics-box collapsible" data-intro-lyrics>
+              <pre class="lyrics-text">[Loading...]</pre>
+              <button class="lyrics-toggle" type="button">Expand</button>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">New Lyrics</div>
+            <div class="lyrics-box collapsible" data-intro-new-lyrics>
+              <pre class="lyrics-text">[Loading...]</pre>
+              <button class="lyrics-toggle" type="button">Expand</button>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Style Prompt</div>
+            <div class="style-box" data-intro-style>[Loading...]</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Cover &middot; Original Lyrics + New Style</div>
+            <audio controls preload="none" src="assets/audio/intro/full_original.mp3"></audio>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Cover &middot; New Lyrics + New Style</div>
+            <audio controls preload="none" src="assets/audio/intro/full_new.mp3"></audio>
           </div>
         </div>
-        <div class="cell">
-          <div class="cell-label">Style Prompt</div>
-          <div class="style-box" data-intro-style>[Loading...]</div>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Continuation</div>
-          <div class="cell-sublabel">Visible: beginning &rarr; first chorus</div>
-          <audio controls preload="none" src="assets/audio/intro/continuation_visible.mp3"></audio>
-          <div class="cell-sublabel">Generated full song</div>
-          <audio controls preload="none" src="assets/audio/intro/continuation_out.mp3"></audio>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Outpainting</div>
-          <div class="cell-sublabel">Visible: first chorus only</div>
-          <audio controls preload="none" src="assets/audio/intro/outpainting_visible.mp3"></audio>
-          <div class="cell-sublabel">Generated full song</div>
-          <audio controls preload="none" src="assets/audio/intro/outpainting_out.mp3"></audio>
-        </div>
-        <div class="cell">
-          <div class="cell-label">Inpainting</div>
-          <div class="cell-sublabel">Invisible: first chorus only (the model must generate this part)</div>
-          <audio controls preload="none" src="assets/audio/intro/inpainting_invisible.mp3"></audio>
-          <div class="cell-sublabel">Generated full song</div>
-          <audio controls preload="none" src="assets/audio/intro/inpainting_out.mp3"></audio>
+      </div>
+
+      <!-- ----- 1.2 Partial-Reference Cover demo ----- -->
+      <h3 id="intro-partial" class="subsection-title">1.2 Partial-Reference Cover Demo</h3>
+      <div class="demo-card">
+        <div class="case-row case-row-intro-partial">
+          <div class="cell">
+            <div class="cell-label">Full Reference Music</div>
+            <audio controls preload="none" src="assets/audio/intro/reference.mp3"></audio>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Full Lyrics</div>
+            <div class="lyrics-box collapsible" data-intro-lyrics>
+              <pre class="lyrics-text">[Loading...]</pre>
+              <button class="lyrics-toggle" type="button">Expand</button>
+            </div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Style Prompt</div>
+            <div class="style-box" data-intro-style>[Loading...]</div>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Continuation</div>
+            <div class="cell-sublabel">Visible: beginning &rarr; first chorus</div>
+            <audio controls preload="none" src="assets/audio/intro/continuation_visible.mp3"></audio>
+            <div class="cell-sublabel">Generated full song</div>
+            <audio controls preload="none" src="assets/audio/intro/continuation_out.mp3"></audio>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Outpainting</div>
+            <div class="cell-sublabel">Visible: first chorus only</div>
+            <audio controls preload="none" src="assets/audio/intro/outpainting_visible.mp3"></audio>
+            <div class="cell-sublabel">Generated full song</div>
+            <audio controls preload="none" src="assets/audio/intro/outpainting_out.mp3"></audio>
+          </div>
+          <div class="cell">
+            <div class="cell-label">Inpainting</div>
+            <div class="cell-sublabel">Invisible: first chorus only (the model must generate this part)</div>
+            <audio controls preload="none" src="assets/audio/intro/inpainting_invisible.mp3"></audio>
+            <div class="cell-sublabel">Generated full song</div>
+            <audio controls preload="none" src="assets/audio/intro/inpainting_out.mp3"></audio>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================ -->
-  <!-- 2. FULL-SONG COVER TASK                                       -->
-  <!-- ============================================================ -->
-  <section id="full-cover" class="section">
-    <h2 class="section-title">2. Full-Song Cover Task</h2>
-    <div class="prose">
-      <p class="section-intro">
-        We compare FlexCover with three baselines: <em>Suno&nbsp;v5.5</em>, <em>ACE-Step&nbsp;1.5</em>,
-        and <em>SongEcho</em>. Eight cases in total: four use the song's <em>original</em> lyrics under
-        a new style; the other four use <em>new</em> lyrics under a new style. Only the first case in
-        each subsection is expanded by default &mdash; click any collapsed case header to reveal it.
-      </p>
-    </div>
+    <!-- ============================================================ -->
+    <!-- 2. FULL-SONG COVER TASK                                       -->
+    <!-- ============================================================ -->
+    <section id="full-cover" class="section">
+      <h2 class="section-title">2. Full-Song Cover Task</h2>
+      <div class="prose">
+        <p class="section-intro">
+          We compare FlexCover with three baselines: <em>Suno&nbsp;v5.5</em>, <em>ACE-Step&nbsp;1.5</em>,
+          and <em>SongEcho</em>. Eight cases in total: four use the song's <em>original</em> lyrics under
+          a new style; the other four use <em>new</em> lyrics under a new style. Only the first case in
+          each subsection is expanded by default &mdash; click any collapsed case header to reveal it.
+        </p>
+      </div>
 
-    <h3 id="full-original" class="subsection-title">2.1 Original Lyrics + New Style (Cases&nbsp;1&ndash;4)</h3>
-    <div id="full-cases-original"></div>
+      <h3 id="full-original" class="subsection-title">2.1 Original Lyrics + New Style (Cases&nbsp;1&ndash;4)</h3>
+      <div id="full-cases-original"></div>
 
-    <h3 id="full-new" class="subsection-title">2.2 New Lyrics + New Style (Cases&nbsp;5&ndash;8)</h3>
-    <div id="full-cases-new"></div>
-  </section>
+      <h3 id="full-new" class="subsection-title">2.2 New Lyrics + New Style (Cases&nbsp;5&ndash;8)</h3>
+      <div id="full-cases-new"></div>
+    </section>
 
-  <!-- ============================================================ -->
-  <!-- 3. PARTIAL-REFERENCE COVER TASK                               -->
-  <!-- ============================================================ -->
-  <section id="partial-cover" class="section">
-    <h2 class="section-title">3. Partial-Reference Cover Task</h2>
-    <div class="prose">
-      <p class="section-intro">
-        We compare FlexCover with two baselines: <em>ACE-Step&nbsp;1.5</em> and <em>SongEcho</em>.
-        <em>Suno&nbsp;v5.5</em> is excluded as it does not natively support partial-reference
-        conditioning. Six cases &mdash; two for each configuration. The first case in each
-        configuration is expanded by default; click a collapsed header to reveal the rest.
-      </p>
-    </div>
+    <!-- ============================================================ -->
+    <!-- 3. PARTIAL-REFERENCE COVER TASK                               -->
+    <!-- ============================================================ -->
+    <section id="partial-cover" class="section">
+      <h2 class="section-title">3. Partial-Reference Cover Task</h2>
+      <div class="prose">
+        <p class="section-intro">
+          We compare FlexCover with two baselines: <em>ACE-Step&nbsp;1.5</em> and <em>SongEcho</em>.
+          <em>Suno&nbsp;v5.5</em> is excluded. Six cases &mdash; two for each configuration. The first case in each
+          configuration is expanded by default; click a collapsed header to reveal the rest.
+        </p>
+      </div>
 
-    <h3 id="partial-continuation" class="subsection-title">3.1 Continuation (Cases&nbsp;1&ndash;2)</h3>
-    <div id="partial-cases-continuation"></div>
+      <h3 id="partial-continuation" class="subsection-title">3.1 Continuation (Cases&nbsp;1&ndash;2)</h3>
+      <div id="partial-cases-continuation"></div>
 
-    <h3 id="partial-outpainting" class="subsection-title">3.2 Outpainting (Cases&nbsp;3&ndash;4)</h3>
-    <div id="partial-cases-outpainting"></div>
+      <h3 id="partial-outpainting" class="subsection-title">3.2 Outpainting (Cases&nbsp;3&ndash;4)</h3>
+      <div id="partial-cases-outpainting"></div>
 
-    <h3 id="partial-inpainting" class="subsection-title">3.3 Inpainting (Cases&nbsp;5&ndash;6)</h3>
-    <div id="partial-cases-inpainting"></div>
-  </section>
+      <h3 id="partial-inpainting" class="subsection-title">3.3 Inpainting (Cases&nbsp;5&ndash;6)</h3>
+      <div id="partial-cases-inpainting"></div>
+    </section>
 
-</main>
+  </main>
 
-<footer class="paper-footer">
-  <p>Submission&nbsp;#1346 &mdash; demo page for double-blind review.</p>
-</footer>
+  <footer class="paper-footer">
+    <p>Submission&nbsp;#1346 &mdash; demo page for double-blind review.</p>
+  </footer>
 
-<script src="samples_data.js"></script>
-<script src="script.js"></script>
+  <script src="samples_data.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
