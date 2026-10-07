@@ -1,5 +1,5 @@
 /* =========================================================
-   FlexCover demo page — NeurIPS-style academic layout
+   MuLaCover demo page — NeurIPS-style academic layout
    - Horizontal sticky TOC at the top, full-width body below
    - Each case is a single horizontal row of panels
    - First case in each subsection is expanded; rest collapsed
@@ -50,7 +50,7 @@
   --link: #6e3c8a;
   /* 链接颜色，一般跟 --accent 保持一致；要让链接显眼可单独改深。 */
 
-  /* ---- "Ours"（FlexCover）高亮，玫瑰胭脂粉系（5 处）。
+  /* ---- "Ours"（MuLaCover）高亮，玫瑰胭脂粉系（5 处）。
          同色系从浅到深排列：bg-2 → bg → border → strip → fg。
          改色时建议保持这个明度梯度，否则会失去层次感。               */
   --ours-bg-2: #f7c2d8;
@@ -582,7 +582,7 @@ strong {
 }
 
 /* ============================================================
-   FlexCover (ours) highlight — only used in §2 and §3 outputs
+   MuLaCover (ours) highlight — only used in §2 and §3 outputs
    ============================================================ */
 .ours-cell {
   background: linear-gradient(180deg, var(--ours-bg-2) 0%, var(--ours-bg) 100%);

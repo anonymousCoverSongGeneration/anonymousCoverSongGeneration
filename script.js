@@ -1,5 +1,5 @@
 /* =========================================================
-   FlexCover demo page — interactive behaviors
+   MuLaCover demo page — interactive behaviors
    - Auto-generates case cards (Sections 2 & 3) from data
    - Single horizontal row per case
    - Collapsible cases (first in each subsection expanded)
@@ -13,14 +13,14 @@
   // Data
   // --------------------------------------------------------
   const FULL_SYSTEMS = [
-    { key: "flexcover", name: "FlexCover", ours: true  },
+    { key: "mulacover", name: "MuLaCover", ours: true  },
     { key: "suno",      name: "Suno v5.5",     ours: false },
     { key: "acestep",   name: "ACE-Step 1.5",  ours: false },
     { key: "songecho",  name: "SongEcho",      ours: false },
   ];
 
   const PARTIAL_SYSTEMS = [
-    { key: "flexcover", name: "FlexCover", ours: true  },
+    { key: "mulacover", name: "MuLaCover", ours: true  },
     { key: "acestep",   name: "ACE-Step 1.5",  ours: false },
     { key: "songecho",  name: "SongEcho",      ours: false },
   ];
